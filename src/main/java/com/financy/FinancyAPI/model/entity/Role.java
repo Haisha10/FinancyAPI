@@ -1,24 +1,26 @@
 package com.financy.FinancyAPI.model.entity;
 
+import com.financy.FinancyAPI.util.UserRoleName;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "roles")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tips")
-public class Tips {
+@NoArgsConstructor
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String description;
-    private String image;
+
+    @Enumerated(EnumType.STRING)
+    private UserRoleName name;
 }
