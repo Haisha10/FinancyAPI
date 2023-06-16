@@ -3,7 +3,6 @@ package com.financy.FinancyAPI.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,5 +97,38 @@ public class UserService {
         user.setRoles(roles);
 
         return userRepository.save(user);
+    }
+
+    @Transactional
+    public User updateUser(Long userId, UserDTO userDTO) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            return null;
+        }
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setName(userDTO.getName());
+        user.setLastname(userDTO.getLastname());
+
+        List<Role> roles = new ArrayList<Role>();
+        Boolean isBusiness = userDTO.getIsBusiness();
+        if (isBusiness != null && isBusiness.booleanValue()) {
+            roles.add(roleRepository.findByName(UserRoleName.ROLE_BUSINESS).get());
+        } else {
+            roles.add(roleRepository.findByName(UserRoleName.ROLE_PERSONAL).get());
+        }
+        user.setRoles(roles);
+
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    public User deleteUser(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            return null;
+        }
+        userRepository.delete(user);
+        return user;
     }
 }
