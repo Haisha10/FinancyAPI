@@ -42,9 +42,12 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserDTO findByUsernameAndPassword(String username, String password) {
-        User user = userRepository.findByEmailAndPassword(username, password)
-                .orElseThrow(() -> new OpenApiResourceNotFoundException("No existe este usuario."));
+    public List<UserDTO> findByEmailAndPassword(String email, String password) {
+        User user = userRepository.findByEmailAndPassword(email, password)
+                .orElse(null);
+        if (user == null) {
+            return new ArrayList<UserDTO>();
+        }
         Boolean isBusiness = false;
         for (Role role : user.getRoles()) {
             if (role.getName().equals(UserRoleName.ROLE_BUSINESS)) {
@@ -52,13 +55,29 @@ public class UserService {
                 break;
             }
         }
-        return new UserDTO(user.getId(), user.getEmail(), user.getPassword(), user.getName(), user.getLastname(),
-                isBusiness);
+        List<UserDTO> usersDTO = new ArrayList<UserDTO>();
+        usersDTO.add(new UserDTO(user.getId(), user.getEmail(), user.getPassword(), user.getName(), user.getLastname(),
+                isBusiness));
+        return usersDTO;
     }
 
     @Transactional(readOnly = true)
-    public List<User> checkUser(String email) {
-        return userRepository.findByEmail(email);
+    public List<UserDTO> checkUser(String email) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        if (user == null) {
+            return new ArrayList<UserDTO>();
+        }
+        Boolean isBusiness = false;
+        for (Role role : user.getRoles()) {
+            if (role.getName().equals(UserRoleName.ROLE_BUSINESS)) {
+                isBusiness = true;
+                break;
+            }
+        }
+        List<UserDTO> usersDTO = new ArrayList<UserDTO>();
+        usersDTO.add(new UserDTO(user.getId(), user.getEmail(), user.getPassword(), user.getName(), user.getLastname(),
+                isBusiness));
+        return usersDTO;
     }
 
     @Transactional

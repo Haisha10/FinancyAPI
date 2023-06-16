@@ -19,7 +19,7 @@ import com.financy.FinancyAPI.service.UserService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -31,14 +31,14 @@ public class UserController {
 
     // GetMapping of username and password as http parameters with param constructor
     @GetMapping("/users/login")
-    public ResponseEntity<UserDTO> getUserDTO(@Param("username") String username, @Param("password") String password) {
-        return new ResponseEntity<UserDTO>(userService.findByUsernameAndPassword(username, password), HttpStatus.OK);
+    public ResponseEntity<List<UserDTO>> getUserDTO(@Param("email") String email, @Param("password") String password) {
+        return new ResponseEntity<List<UserDTO>>(userService.findByEmailAndPassword(email, password), HttpStatus.OK);
     }
 
     // Check if email alredy exists in database and return a list of the existing ones with param constructor
     @GetMapping("/users/check")
-    public ResponseEntity<List<User>> checkUser(@Param("email") String email) {
-        return new ResponseEntity<List<User>>(userService.checkUser(email), HttpStatus.OK);
+    public ResponseEntity<List<UserDTO>> checkUser(@Param("email") String email) {
+        return new ResponseEntity<List<UserDTO>>(userService.checkUser(email), HttpStatus.OK);
     }
 
     // PostMapping of userDTO as http body with param constructor
