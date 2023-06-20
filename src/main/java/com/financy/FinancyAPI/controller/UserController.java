@@ -19,7 +19,8 @@ import com.financy.FinancyAPI.model.dto.UserDTO;
 import com.financy.FinancyAPI.model.entity.User;
 import com.financy.FinancyAPI.service.UserService;
 
-@CrossOrigin(origins = { "https://haisha10.github.io" })
+//@CrossOrigin(origins = { "https://haisha10.github.io" })
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/api/v1")
 public class UserController {
