@@ -23,42 +23,41 @@ import com.financy.FinancyAPI.service.EmploymentService;
 @RestController
 @RequestMapping("/api/v1")
 public class EmploymentController {
-    @Autowired
-    private EmploymentService employmentService;
+        @Autowired
+        private EmploymentService employmentService;
 
-    @GetMapping("/employments")
-    public ResponseEntity<List<EmploymentDTO>> getAllEmploymentsDTO(
-            @Param("userId") Long userId) {
-        return new ResponseEntity<List<EmploymentDTO>>(
-                employmentService.getAllEmploymentsByUserId(userId), HttpStatus.OK);
-    }
+        @GetMapping("/employments")
+        public ResponseEntity<List<EmploymentDTO>> getAllEmploymentsDTO() {
+                return new ResponseEntity<List<EmploymentDTO>>(
+                                employmentService.getAllEmployments(), HttpStatus.OK);
+        }
 
-    @GetMapping("/employments/{userId}")
-    public ResponseEntity<List<EmploymentDTO>> getAllEmploymentsDTOByUserId(
-            @Param("userId") Long userId) {
-        return new ResponseEntity<List<EmploymentDTO>>(
-                employmentService.getAllEmploymentsByUserId(userId), HttpStatus.OK);
-    }
+        @GetMapping("/employments/{userId}")
+        public ResponseEntity<List<EmploymentDTO>> getAllEmploymentsDTOByUserId(
+                        @Param("userId") Long userId) {
+                return new ResponseEntity<List<EmploymentDTO>>(
+                                employmentService.getAllEmploymentsByUserId(userId), HttpStatus.OK);
+        }
 
-    @PostMapping("/employments")
-    public ResponseEntity<EmploymentDTO> createEmploymentDTO(
-            @RequestBody EmploymentDTO employmentDTO, @Param("userId") Long userId) {
-        return new ResponseEntity<EmploymentDTO>(
-                employmentService.createEmployment(employmentDTO, userId), HttpStatus.CREATED);
-    }
+        @PostMapping("/employments")
+        public ResponseEntity<EmploymentDTO> createEmploymentDTO(
+                        @RequestBody EmploymentDTO employmentDTO, @Param("userId") Long userId) {
+                return new ResponseEntity<EmploymentDTO>(
+                                employmentService.createEmployment(employmentDTO, userId), HttpStatus.CREATED);
+        }
 
-    @PutMapping("/employments")
-    public ResponseEntity<EmploymentDTO> updateEmploymentDTO(
-            @Param("employmentId") Long employmentId,
-            @RequestBody EmploymentDTO employmentDTO, @Param("userId") Long userId) {
-        return new ResponseEntity<EmploymentDTO>(
-                employmentService.updateEmployment(employmentId, employmentDTO, userId), HttpStatus.OK);
-    }
+        @PutMapping("/employments")
+        public ResponseEntity<EmploymentDTO> updateEmploymentDTO(
+                        @Param("employmentId") Long employmentId,
+                        @RequestBody EmploymentDTO employmentDTO, @Param("userId") Long userId) {
+                return new ResponseEntity<EmploymentDTO>(
+                                employmentService.updateEmployment(employmentId, employmentDTO, userId), HttpStatus.OK);
+        }
 
-    @DeleteMapping("/employments")
-    public ResponseEntity<EmploymentDTO> deleteEmploymentDTO(
-            @Param("employmentId") Long employmentId) {
-        return new ResponseEntity<EmploymentDTO>(
-                employmentService.deleteEmployment(employmentId), HttpStatus.NO_CONTENT);
-    }
+        @DeleteMapping("/employments")
+        public ResponseEntity<EmploymentDTO> deleteEmploymentDTO(
+                        @Param("employmentId") Long employmentId) {
+                return new ResponseEntity<EmploymentDTO>(
+                                employmentService.deleteEmployment(employmentId), HttpStatus.NO_CONTENT);
+        }
 }

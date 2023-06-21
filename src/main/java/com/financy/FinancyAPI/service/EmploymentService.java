@@ -60,13 +60,13 @@ public class EmploymentService {
         Employment employment = new Employment(0l, employmentDTO.getRuc(), employmentDTO.getName(),
                 employmentDTO.getDescription(), employmentDTO.getCreationDate(), employmentDTO.getAddress(),
                 employmentDTO.getPhone(), employmentDTO.getEmail(), employmentDTO.getRequirements(),
-                employmentDTO.getSalary(), employmentDTO.getIsAvailable(), userRepository.findById(userId).orElse(null),
+                employmentDTO.getSalary(), true, userRepository.findById(userId).orElse(null),
                 new ArrayList<User>());
         employmentRepository.save(employment);
         return new EmploymentDTO(employment.getId(), employment.getRuc(), employment.getName(),
                 employment.getDescription(), employment.getCreationDate(), employment.getAddress(),
                 employment.getPhone(), employment.getEmail(), employment.getRequirements(), employment.getSalary(),
-                employment.getIsAvailable(), new ArrayList<Long>());
+                true, new ArrayList<Long>());
     }
 
     @Transactional
@@ -85,6 +85,13 @@ public class EmploymentService {
         employment.setRequirements(employmentDTO.getRequirements());
         employment.setSalary(employmentDTO.getSalary());
         employment.setIsAvailable(employmentDTO.getIsAvailable());
+
+        if (employmentDTO.getPostulants().size() > 0) {
+            User postulant = userRepository.findById(employmentDTO.getPostulants().get(0)).orElse(null);
+            if (postulant != null) {
+                employment.getPostulants().add(postulant);
+            }
+        }
         employmentRepository.save(employment);
         List<Long> postulants = new ArrayList<Long>();
         for (User postulant : employment.getPostulants()) {
