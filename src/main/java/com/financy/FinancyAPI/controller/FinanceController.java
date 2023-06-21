@@ -43,7 +43,7 @@ public class FinanceController {
 
     @DeleteMapping("/finances")
     public ResponseEntity<FinanceDTO> deleteFinanceDTO(@Param("financeId") Long financeId) {
-        return new ResponseEntity<FinanceDTO>(financeService.deleteFinance(financeId), HttpStatus.OK);
+        return new ResponseEntity<FinanceDTO>(financeService.deleteFinance(financeId), HttpStatus.NO_CONTENT);
     }
     
     
