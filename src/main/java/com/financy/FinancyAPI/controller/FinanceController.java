@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.financy.FinancyAPI.model.dto.FinanceDTO;
 import com.financy.FinancyAPI.service.FinanceService;
 
-//@CrossOrigin(origins = { "https://haisha10.github.io" })
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "https://haisha10.github.io" })
 @RestController
 @RequestMapping("/api/v1")
 public class FinanceController {

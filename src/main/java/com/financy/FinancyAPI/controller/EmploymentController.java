@@ -18,8 +18,7 @@ import com.financy.FinancyAPI.model.dto.EmploymentDTO;
 
 import com.financy.FinancyAPI.service.EmploymentService;
 
-//@CrossOrigin(origins = { "https://haisha10.github.io" })
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = { "https://haisha10.github.io" })
 @RestController
 @RequestMapping("/api/v1")
 public class EmploymentController {
